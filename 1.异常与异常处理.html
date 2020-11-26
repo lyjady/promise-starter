@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>异常与异常处理</title>
+  <script>
+    // Js中将Error分为ReferenceError, TypeError, RangeError, SyntaxError
+    // 分别是引用错误, 类型错误, 范围错误, 语法错误
+    // Js中的异常处理与Java一样, 如果不对发生的异常进行catch那么后面的代码将无法执行
+    try {
+      let b
+      console.log(b.abort)
+    } catch (error) {
+      // error异常对象, 包含message与stack属性
+      // message为异常信息, stack不仅包含异常信息还包含方法调用栈的信息
+      console.log(error.message)
+      console.log(error.stack)
+    }
+    function fn() {
+      // 和Java一样能将异常抛出交个调用者进行处理
+      throw new SyntaxError('语法异常')
+    }
+
+    try {
+      fn()
+    } catch (error) {
+      console.log(error.message)
+      console.log(error.stack)
+    }
+  </script>
+</head>
+<body>
+
+</body>
+</html>
