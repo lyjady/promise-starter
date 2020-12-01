@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>回调函数新的Promise的状态</title>
+  <script>
+    // 回调函数新的Promise的状态由then()或者catch()的返回结果而决定
+    // 如果返回一个Promise对象那么又这个Promise对象的结果决定
+    // 如果返回一个对象或者一个普通的数据那么新的Promise的状态是resolved
+    // 如果执行错误回调只能说明调用改then()或者catch()的Promise是rejected, 不能说明当前执行错误回调的Promise的状态
+    // 当前执行错误回调的Promise的状态又当前的Promise的then()或者catch()的返回结果而决定, 不能因为他执行了错误回调就以为之后一直执行错误回调
+    // 如果一个Promise的会滴函数没有指定返回值并且没有发生异常和抛出异常那么返回的Promise的状态是resolved, value为undefined
+    const p1 = new Promise(((resolve, reject) => {
+      resolve(1)
+    }))
+    p1.then(value => {
+      throw `发生错误, ${value}`
+    }).catch(reason => {
+      console.log(reason)
+      return '现在又正确了'
+    }).then(value => console.log(value))
+  </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -18,6 +18,18 @@
     // 只指定失败的回调函数的调用
     const p3 = Promise.reject(2)
     p3.catch(reason => console.log(`处理失败, 失败的数据${reason}`))
+    const p4 = Promise.resolve(1)
+    const p5 = new Promise(((resolve, reject) => {
+      setTimeout(() => reject(4), 1000)
+    }))
+    const p6 = Promise.reject(3)
+    // 全部成功才算成功, 成功的返回值是数组内的成功Promise的value按照顺序组成的数组
+    // 只要有一个错误那么就会调用失败的回调函数, reason是数组内第一个失败的Promise的失败数据(和数组顺序无关, 哪个Promise先失败就是哪个的reason)
+    const allPromise = Promise.all([p4, p5, p6]);
+    allPromise.then(value => console.log('all then ' + value)).catch(reason => console.log('all catch ' + reason))
+    // 只要数组内的Promise有一个成功就会执行成功的回调函数, 谁先成功谁就先执行回调函数
+    const racePromise = Promise.race([p4, p5, p6])
+    racePromise.then(value => console.log('race then ' + value)).catch(reason => console.log('race catch ' + reason))
   </script>
 </head>
 <body>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>异常穿透</title>
+  <script>
+    // 当Promise进行链式调用的时候可以在catch错误的回调处理, 当其中一个Promise发生错误的时候就会执行最后指定的错误回调
+    // 从表面上看最后的catch是之前全部的Promise错误回调, 但是catch只是调用这个catch的Promise对象的错误回调,
+    // 在之前的then()中只指定了成功的回调没有指定错误回调那么Promise会自动指定一个错误回调reason => Promise.reject(reason)
+    // 将发生错误的数据层层传递下去, 直到最后一个错误回调
+    // 当在最后指定了一个catch(), 一旦发生错误从表面上看是直接执行了最后的错误回调
+    // 但是事实上是先执行了每个then()的默认错误回调reason => Promise.reject(reason)返回rejected的Promise
+    // 将错误信息一直传到最后由自定义的错误回调处理
+    const p = Promise.resolve(1)
+    p.then(value => {
+      return value - 1
+    }).then(value => {
+      throw value
+    }).then(value => {
+      return value - 1
+    }).then(value => {
+      return value - 1
+    }).catch(reason => console.log(reason))
+  </script>
+</head>
+<body>
+
+</body>
+</html>

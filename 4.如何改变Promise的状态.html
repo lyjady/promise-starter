@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>如何改变Promise的状态</title>
+  <script>
+    // 1.resolve: 如果当前状态是pending那么就会变成resolved
+    // 2.reject: 如果当前状态是pending那么就会变成rejected
+    // 3.throw: 抛出异常会变成rejected, 抛出的对象或者数据将是错误回调的参数
+    const promise = new Promise(() => {
+      throw 4
+    })
+    promise.catch(reason => console.log(reason))
+    const promise2 = new Promise(() => {
+      throw new TypeError('TypeError')
+    })
+    promise2.catch(reason => console.log(reason))
+  </script>
+</head>
+<body>
+
+</body>
+</html>

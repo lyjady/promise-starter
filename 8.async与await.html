@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>async与await</title>
+  <script>
+    // async用于修饰方法, 如果被修饰的方法的返回值是Promise对象那么会将Promise的结果通过await取出来
+    // 如果返回值是一个普通的对象或者一个数据那么也是可以用async修饰, 返回什么就获得什么
+    // await修饰一个表达式, 如果表达式是一个Promise对象那么就返回Promise的数据, 如一个普通的对象或者一个数据那么直接返回
+    // await必须定义在async内
+    async function f1() {
+      return 1
+    }
+    console.log(f1())
+    function f2() {
+      return Promise.resolve(1)
+    }
+    async function f3() {
+      const value = await f2();
+      console.log(value)
+    }
+    f3()
+  </script>
+</head>
+<body>
+
+</body>
+</html>
